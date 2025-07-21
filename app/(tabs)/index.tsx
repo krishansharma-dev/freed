@@ -9,7 +9,7 @@ export default function Page() {
     <View>
      
 
-      <Text>Hello</Text>
+      <Text  className='text-3xl bg-white text-red-500 p-2'>Hello</Text>
     </View>
   )
 }
