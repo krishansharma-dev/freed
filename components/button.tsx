@@ -4,9 +4,9 @@ import { Text, TouchableOpacity } from 'react-native';
 export default function Button({ children }: { children: ReactNode }) {
     return (
         <TouchableOpacity>
-            <Text>
+            <Text className='text-white'>
                 {children}
             </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> 
     );
 }
