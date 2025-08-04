@@ -1,4 +1,5 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
+
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
@@ -41,11 +42,8 @@ const VerificationMethodScreen = () => {
       return;
     }
     console.log('Selected verification method:', selectedMethod);
-    // Navigate to Professional screen if skipping or no verification selected
-    if (selectedMethod === 'skip') {
-      router.push('/onboarding/profession');
-    }
-    // Add logic here for other verification methods if needed
+    // Navigate to Professional screen
+    router.push('/onboarding/profession');
   };
 
   const handleSkip = () => {
@@ -55,60 +53,75 @@ const VerificationMethodScreen = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Verify Your Identity</Text>
-      <Text style={styles.subtitle}>
-        Verification helps build trust in the community. You can verify now or skip and do it later.
-      </Text>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Verify Your Identity</Text>
+         
+        </View>
 
-      <View style={styles.methodsContainer}>
-        {verificationMethods.map((method) => (
-          <TouchableOpacity
-            key={method.id}
-            style={[
-              styles.methodCard,
-              selectedMethod === method.id && styles.selectedMethodCard,
-            ]}
-            onPress={() => setSelectedMethod(method.id)}
-          >
-            <View style={styles.methodHeader}>
-              <Ionicons
-                name={method.icon}
-                size={24}
-                color={selectedMethod === method.id ? '#007AFF' : '#666'}
-              />
-              <Text
+        {/* Verification Methods */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Select Verification Method</Text>
+          <Text style={styles.cardSubtitle}>
+            You can verify now or skip and do it later
+          </Text>
+
+          <View style={styles.methodsContainer}>
+            {verificationMethods.map((method) => (
+              <TouchableOpacity
+                key={method.id}
                 style={[
-                  styles.methodTitle,
-                  selectedMethod === method.id && styles.selectedMethodTitle,
+                  styles.methodCard,
+                  selectedMethod === method.id && styles.selectedMethodCard,
                 ]}
+                onPress={() => setSelectedMethod(method.id)}
               >
-                {method.title}
-              </Text>
-            </View>
-            <Text style={styles.methodDescription}>{method.description}</Text>
+                <View style={styles.methodHeader}>
+                  <Ionicons
+                    name={method.icon}
+                    size={24}
+                    color={selectedMethod === method.id ? '#1877F2' : '#65676B'}
+                  />
+                  <Text
+                    style={[
+                      styles.methodTitle,
+                      selectedMethod === method.id && styles.selectedMethodTitle,
+                    ]}
+                  >
+                    {method.title}
+                  </Text>
+                </View>
+                <Text style={styles.methodDescription}>{method.description}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
 
-            {selectedMethod === method.id && (
-              <View style={styles.selectedIndicator}>
-                <Ionicons name="checkmark-circle" size={24} color="#007AFF" />
-              </View>
-            )}
-          </TouchableOpacity>
-        ))}
-      </View>
+        {/* Progress Indicator */}
+        <View style={styles.progressContainer}>
+          <View style={styles.progressBar}>
+            <View style={styles.progressFill} />
+          </View>
+          <Text style={styles.progressText}>Step 2 of 3</Text>
+        </View>
 
-      <View style={styles.footer}>
+        {/* Continue Button */}
         <TouchableOpacity
-          style={[styles.continueButton, !selectedMethod && styles.disabledButton]}
+          style={[styles.nextButton, !selectedMethod && styles.disabledButton]}
           onPress={handleContinue}
+          disabled={!selectedMethod}
+          activeOpacity={0.8}
         >
-          <Text style={styles.continueButtonText}>
+          <Text style={styles.nextButtonText}>
             {selectedMethod === 'skip' ? 'Continue Without Verification' : 'Continue'}
           </Text>
         </TouchableOpacity>
 
+        {/* Skip Option */}
         <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-          <Text style={styles.skipButtonText}>Skip for now</Text>
+          <Text style={styles.skipText}>Skip for now</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -117,93 +130,149 @@ const VerificationMethodScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
+    backgroundColor: '#F0F2F5',
+  },
+  content: {
     padding: 20,
-    backgroundColor: '#fff',
+    paddingTop: 200,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 10,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1C1E21',
     marginBottom: 8,
     textAlign: 'center',
-    color: '#333',
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
-    marginBottom: 30,
+    color: '#65676B',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 20,
   },
-  methodsContainer: {
-    marginBottom: 20,
-  },
-  methodCard: {
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+  card: {
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 20,
     marginBottom: 16,
-    backgroundColor: '#fff',
-    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1C1E21',
+    marginBottom: 4,
+  },
+  cardSubtitle: {
+    fontSize: 14,
+    color: '#65676B',
+    marginBottom: 16,
+    lineHeight: 18,
+  },
+  methodsContainer: {
+    gap: 12,
+  },
+  methodCard: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E4E6EA',
+    backgroundColor: '#F8F9FA',
   },
   selectedMethodCard: {
-    borderColor: '#007AFF',
-    backgroundColor: '#f0f7ff',
+    borderColor: '#1877F2',
+    backgroundColor: '#E7F3FF',
   },
   methodHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 8,
   },
   methodTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '500',
     marginLeft: 12,
-    color: '#333',
+    color: '#1C1E21',
   },
   selectedMethodTitle: {
-    color: '#007AFF',
+    color: '#1877F2',
+    fontWeight: '600',
   },
   methodDescription: {
     fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
+    color: '#65676B',
+    lineHeight: 18,
   },
-  selectedIndicator: {
-    position: 'absolute',
-    top: 15,
-    right: 15,
-  },
-  footer: {
-    marginTop: 20,
-  },
-  continueButton: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    borderRadius: 10,
+  progressContainer: {
     alignItems: 'center',
-    marginBottom: 16,
+    marginVertical: 24,
+  },
+  progressBar: {
+    width: '100%',
+    height: 4,
+    backgroundColor: '#E4E6EA',
+    borderRadius: 2,
+    marginBottom: 8,
+  },
+  progressFill: {
+    width: '33%', // Represents Step 2 of 3
+    height: '100%',
+    backgroundColor: '#1877F2',
+    borderRadius: 2,
+  },
+  progressText: {
+    fontSize: 14,
+    color: '#65676B',
+    fontWeight: '500',
+  },
+  nextButton: {
+    backgroundColor: '#1877F2',
+    paddingVertical: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 8,
+    shadowColor: '#1877F2',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   disabledButton: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#E4E6EA',
+    shadowOpacity: 0,
+    elevation: 0,
   },
-  continueButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  skipButton: {
-    padding: 16,
-    borderRadius: 10,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  skipButtonText: {
-    color: '#666',
+  nextButtonText: {
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
+  },
+  skipButton: {
+    alignItems: 'center',
+    paddingVertical: 16,
+    marginTop: 8,
+  },
+  skipText: {
+    color: '#1877F2',
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
 

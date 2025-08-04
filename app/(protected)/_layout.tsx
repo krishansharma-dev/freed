@@ -1,15 +1,13 @@
-
 import { Stack } from "expo-router";
 
 export default function ProtectedLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="onboarding/profile" options={{ title: "Profile" }} />
-      <Stack.Screen name ="onboarding/community" options={{ title: "Community Information" }} />
-      <Stack.Screen name="onboarding/area" options={{ title: "Select Area" }} />
-      <Stack.Screen name="onboarding/verification" options={{ title: "Verification" }} />
-
-  
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="onboarding/profile" />
+      <Stack.Screen name="onboarding/community" />
+      <Stack.Screen name="onboarding/area" />
+      <Stack.Screen name="onboarding/verification" />
+      
       {/* Other screens will be auto-included */}
     </Stack>
   );
