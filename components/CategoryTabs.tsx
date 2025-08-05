@@ -126,17 +126,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activeLabelContainer: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#FF0000',
   },
   tabLabel: {
     fontSize: 14,
     fontFamily: 'Inter-Medium',
     textTransform: 'capitalize',
-    fontWeight: '500',
-    color: '#FFFFFF',
+    fontWeight: '700', // Changed from '500' to '700' for bold
+    color: '#FF0000',
   },
   activeTabLabel: {
     fontFamily: 'Inter-SemiBold',
-    fontWeight: '600',
+    fontWeight: '800', // Changed from '600' to '800' for extra bold
   },
 });

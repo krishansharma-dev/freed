@@ -1,5 +1,7 @@
+import Feather from '@expo/vector-icons/Feather';
+import Foundation from '@expo/vector-icons/Foundation';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
-import { Chrome as Home, Search, User } from 'lucide-react-native';
 import React from 'react';
 
 export default function TabLayout() {
@@ -23,7 +25,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ size, color }) => (
-            <Home size={size} color={color} />
+            <Foundation name="home" size={24} color="white" />
           ),
         }}
       />
@@ -32,7 +34,7 @@ export default function TabLayout() {
         options={{
           title: 'Search',
           tabBarIcon: ({ size, color }) => (
-            <Search size={size} color={color} />
+           <Ionicons name="search" size={24} color="white" />
           ),
         }}
       />
@@ -41,7 +43,7 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ size, color }) => (
-            <User size={size} color={color} />
+          <Feather name="user" size={24} color="white" />
           ),
         }}
       />
