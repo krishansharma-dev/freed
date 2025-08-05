@@ -115,43 +115,7 @@ export function VerticalNewsCarousel({ articles }: VerticalNewsCarouselProps) {
         ))}
       </PagerView>
 
-      {/* Navigation Indicators */}
-      {/* <View style={styles.navigationContainer}>
-        <TouchableOpacity 
-          style={[styles.navButton, currentIndex === 0 && styles.navButtonDisabled]}
-          onPress={navigateUp}
-          disabled={currentIndex === 0}
-        >
-          <ChevronUp size={24} color={currentIndex === 0 ? '#9CA3AF' : '#FFFFFF'} />
-        </TouchableOpacity>
-        
-        <View style={styles.indicator}>
-          <Text style={styles.indicatorText}>
-            {currentIndex + 1} / {articles.length}
-          </Text>
-        </View>
-        
-        <TouchableOpacity 
-          style={[styles.navButton, currentIndex === articles.length - 1 && styles.navButtonDisabled]}
-          onPress={navigateDown}
-          disabled={currentIndex === articles.length - 1}
-        >
-          <ChevronDown size={24} color={currentIndex === articles.length - 1 ? '#9CA3AF' : '#FFFFFF'} />
-        </TouchableOpacity>
-      </View> */}
-
-      {/* Progress Indicator */}
-      {/* <View style={styles.progressContainer}>
-        {articles.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.progressDot,
-              index === currentIndex && styles.progressDotActive
-            ]}
-          />
-        ))}
-      </View> */}
+   
     </View>
   );
 }

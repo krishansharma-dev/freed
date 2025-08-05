@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { VerticalNewsCarousel } from './VerticalNewsCarousel';
 
-
 const renderScene = SceneMap({
   topstories: () => <VerticalNewsCarousel articles={mockNewsData.filter(article => article.category === 'topstories')} />,
   trending: () => <VerticalNewsCarousel articles={mockNewsData.filter(article => article.category === 'trending')} />,
@@ -24,8 +23,8 @@ export function CategoryTabs() {
         indicatorStyle={styles.indicator}
         style={styles.tabBar}
         labelStyle={styles.tabLabel}
-        activeColor="#1E40AF"
-        inactiveColor="#64748B"
+        activeColor="#FFFFFF"
+        inactiveColor="#94A3B8"
         scrollEnabled
         tabStyle={styles.tab}
         renderLabel={({
@@ -64,18 +63,18 @@ export function CategoryTabs() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#000000',
   },
   tabBarContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#000000',
     paddingHorizontal: 16,
     paddingTop: 8,
-    shadowColor: '#000',
+    shadowColor: '#FFFFFF',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     height: 48,
   },
   indicator: {
-    backgroundColor: '#1E40AF',
+    backgroundColor: '#FFFFFF',
     height: 3,
     borderRadius: 2,
     marginBottom: 2,
@@ -107,13 +106,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activeLabelContainer: {
-    backgroundColor: '#EFF6FF',
+    backgroundColor: '#1E293B',
   },
   tabLabel: {
     fontSize: 14,
     fontFamily: 'Inter-Medium',
     textTransform: 'capitalize',
     fontWeight: '500',
+    color: '#FFFFFF',
   },
   activeTabLabel: {
     fontFamily: 'Inter-SemiBold',
