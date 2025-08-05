@@ -37,7 +37,7 @@ const ProfileOnboardingScreen = () => {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Complete Your Profile</Text>
-          <Text style={styles.subtitle}>Learn, Connect & Grow</Text>
+        
         </View>
 
         {/* Gender Selection Card */}
