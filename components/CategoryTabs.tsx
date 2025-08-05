@@ -1,21 +1,57 @@
 import { categories, mockNewsData } from '@/data/mockNews';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import {
+    Pressable,
+    StyleSheet,
+    Text,
+    View,
+    useWindowDimensions,
+} from 'react-native';
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+} from 'react-native-reanimated';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { VerticalNewsCarousel } from './VerticalNewsCarousel';
 
 const renderScene = SceneMap({
-  topstories: () => <VerticalNewsCarousel articles={mockNewsData.filter(article => article.category === 'topstories')} />,
-  trending: () => <VerticalNewsCarousel articles={mockNewsData.filter(article => article.category === 'trending')} />,
-  technology: () => <VerticalNewsCarousel articles={mockNewsData.filter(article => article.category === 'technology')} />,
-  sports: () => <VerticalNewsCarousel articles={mockNewsData.filter(article => article.category === 'sports')} />,
+  topstories: () => (
+    <VerticalNewsCarousel
+      articles={mockNewsData.filter(
+        (article) => article.category === 'topstories'
+      )}
+    />
+  ),
+  trending: () => (
+    <VerticalNewsCarousel
+      articles={mockNewsData.filter(
+        (article) => article.category === 'trending'
+      )}
+    />
+  ),
+  technology: () => (
+    <VerticalNewsCarousel
+      articles={mockNewsData.filter(
+        (article) => article.category === 'technology'
+      )}
+    />
+  ),
+  sports: () => (
+    <VerticalNewsCarousel
+      articles={mockNewsData.filter(
+        (article) => article.category === 'sports'
+      )}
+    />
+  ),
 });
 
 export function CategoryTabs() {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
-  const [routes] = useState(categories.map(cat => ({ key: cat.key, title: cat.title })));
+  const [routes] = useState(
+    categories.map((cat) => ({ key: cat.key, title: cat.title }))
+  );
 
   const renderTabBar = (props: any) => (
     <View style={styles.tabBarContainer}>
@@ -25,7 +61,7 @@ export function CategoryTabs() {
         style={styles.tabBar}
         labelStyle={styles.tabLabel}
         activeColor="#FFFFFF"
-        inactiveColor="#94A3B8"
+        inactiveColor="#A0AEC0"
         scrollEnabled
         tabStyle={styles.tab}
         renderLabel={({
@@ -37,6 +73,7 @@ export function CategoryTabs() {
           focused: boolean;
           color: string;
         }) => {
+          // One shared value per label
           const scale = useSharedValue(1);
 
           const animatedStyle = useAnimatedStyle(() => ({
@@ -44,22 +81,31 @@ export function CategoryTabs() {
           }));
 
           return (
-            <TouchableOpacity
+            <Pressable
               onPressIn={() => {
-                scale.value = 0.95; // Scale down slightly on press
+                scale.value = 0.95;
               }}
               onPressOut={() => {
-                scale.value = 1; // Return to normal scale
-                props.jumpTo(route.key); // Switch to the selected tab
+                scale.value = 1;
+                props.jumpTo(route.key);
               }}
-              style={[styles.labelContainer, focused && styles.activeLabelContainer]}
+              style={[
+                styles.labelContainer,
+                focused && styles.activeLabelContainer,
+              ]}
             >
               <Animated.View style={animatedStyle}>
-                <Text style={[styles.tabLabel, { color }, focused && styles.activeTabLabel]}>
+                <Text
+                  style={[
+                    styles.tabLabel,
+                    { color },
+                    focused && styles.activeTabLabel,
+                  ]}
+                >
                   {route.title}
                 </Text>
               </Animated.View>
-            </TouchableOpacity>
+            </Pressable>
           );
         }}
       />
@@ -87,56 +133,57 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     backgroundColor: '#000000',
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    shadowColor: '#FFFFFF',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    paddingBottom: 1,
+    elevation: 10,
   },
   tabBar: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#000000',
     elevation: 0,
     shadowOpacity: 0,
     borderBottomWidth: 0,
-    height: 48,
+    height: 56,
   },
   indicator: {
-    backgroundColor: '#FFFFFF',
-    height: 3,
-    borderRadius: 2,
-    marginBottom: 2,
+    backgroundColor: '#FF0000',
+    height: 4,
+    borderRadius: 3,
+    marginBottom: 6,
   },
   tab: {
     width: 'auto',
-    minWidth: 80,
-    paddingHorizontal: 4,
+    minWidth: 100,
+    paddingHorizontal: 8,
   },
   labelContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
+    paddingHorizontal: 40,
+    paddingVertical: 22,
+    borderRadius: 14,
     backgroundColor: 'transparent',
-    minHeight: 32,
+    minHeight: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
   activeLabelContainer: {
-    backgroundColor: '#FF0000',
+    backgroundColor: '#FF2D55',
   },
   tabLabel: {
-    fontSize: 14,
-    fontFamily: 'Inter-Medium',
+    fontSize: 32,
+    fontFamily: 'Roboto',
     textTransform: 'capitalize',
-    fontWeight: '700', // Changed from '500' to '700' for bold
-    color: '#FF0000',
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
   },
   activeTabLabel: {
-    fontFamily: 'Inter-SemiBold',
-    fontWeight: '800', // Changed from '600' to '800' for extra bold
+    fontFamily: 'Roboto',
+    fontWeight: '900',
+    fontSize: 30,
+    color: '#FFFFFF',
+    textShadowColor: 'rgba(255, 255, 255, 0.2)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 1,
+    letterSpacing: 0.8,
   },
 });
