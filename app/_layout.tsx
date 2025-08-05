@@ -1,6 +1,8 @@
+
 import { AuthProvider } from "@/context/AuthContext";
 import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { Slot } from "expo-router";
+import React from "react";
 import "../global.css";
 
 const myTheme = {

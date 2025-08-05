@@ -1,20 +1,35 @@
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { Tabs } from 'expo-router';
+import { Chrome as Home, Search, User } from 'lucide-react-native';
+import React from 'react';
 
-export default function Layout() {
+export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarShowLabel: true,
-        tabBarLabelStyle: { textAlign: 'center' },
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopWidth: 0,
+          paddingBottom: 8,
+          paddingTop: 8,
+          height: 70,
+          position: 'absolute',
+        },
+        tabBarActiveTintColor: '#FFFFFF',
+        tabBarInactiveTintColor: '#6B7280',
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontFamily: 'Inter-Medium',
+          marginTop: 4,
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" size={24} color={color} />
+          tabBarIcon: ({ size, color }) => (
+            <Home size={size} color={color} />
           ),
         }}
       />
@@ -22,17 +37,8 @@ export default function Layout() {
         name="search"
         options={{
           title: 'Search',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="search1" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="notification"
-        options={{
-          title: 'Notification',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="bells" size={24} color={color} />
+          tabBarIcon: ({ size, color }) => (
+            <Search size={size} color={color} />
           ),
         }}
       />
@@ -40,8 +46,8 @@ export default function Layout() {
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="profile" size={24} color={color} />
+          tabBarIcon: ({ size, color }) => (
+            <User size={size} color={color} />
           ),
         }}
       />

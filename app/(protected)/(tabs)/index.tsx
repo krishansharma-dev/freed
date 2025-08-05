@@ -1,15 +1,34 @@
-import PostListItem from '@/components/PostListItem';
-import { dummyPosts } from '@/dummydata';
-import { FlatList } from 'react-native';
+import { CategoryTabs } from '@/components/CategoryTabs';
+import { Header } from '@/components/Header';
+import { useAuth } from '@/context/AuthContext';
+import { router } from 'expo-router';
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-export default function Page() {
+export default function HomeScreen() {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      router.replace('/(auth)/login');
+    }
+  }, [user]);
+
+  if (!user) {
+    return null;
+  }
+
   return (
-    <FlatList
-      data={dummyPosts}
-      keyExtractor={(item) => item.id} // Added keyExtractor for unique keys
-      renderItem={({ item }) => (
-       <PostListItem post={item} />
-      )}
-    />
+    <View style={styles.container}>
+      <Header />
+      <CategoryTabs />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000000',
+  },
+});
