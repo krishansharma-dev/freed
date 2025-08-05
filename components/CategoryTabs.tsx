@@ -61,7 +61,7 @@ export function CategoryTabs() {
         style={styles.tabBar}
         labelStyle={styles.tabLabel}
         activeColor="#FFFFFF"
-        inactiveColor="#A0AEC0"
+        inactiveColor="#FFFFFF"
         scrollEnabled
         tabStyle={styles.tab}
         renderLabel={({

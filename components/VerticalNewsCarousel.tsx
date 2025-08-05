@@ -3,11 +3,11 @@ import React, { useRef, useState } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Animated, {
-    Extrapolate,
-    interpolate,
-    useAnimatedStyle,
-    useSharedValue,
-    withSpring
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring
 } from 'react-native-reanimated';
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_HEIGHT = SCREEN_HEIGHT * 0.95;
@@ -113,8 +113,6 @@ export function VerticalNewsCarousel({ articles }: VerticalNewsCarouselProps) {
           </View>
         ))}
       </PagerView>
-
-    
     </View>
   );
 }
@@ -122,7 +120,7 @@ export function VerticalNewsCarousel({ articles }: VerticalNewsCarouselProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#FF0000',
   },
   pager: {
     flex: 1,
@@ -141,11 +139,11 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 24,
     overflow: 'hidden',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FF0000',
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-        height: 15,
+      height: 15,
     },
     shadowOpacity: 0.3,
     shadowRadius: 16,
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '60%',
+    height: '40%',
     backgroundColor: '#F3F4F6',
   },
   overlay: {
@@ -161,7 +159,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: '60%',
+    height: '40%',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   content: {
@@ -169,10 +167,19 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    padding: 30,
+    height: '60%',
+    padding: 40,
     backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderTopLeftRadius: 48, // Increased for a smoother, more elegant curve
+    borderTopRightRadius: 48, // Increased for a smoother, more elegant curve
+    shadowColor: '#FF0000',
+    shadowOffset: {
+      width: 0,
+      height: -10, // Adjusted to emphasize the curve shadow
+    },
+    shadowOpacity: 0.2, // Softened for elegance
+    shadowRadius: 3, // Reduced for a more refined shadow
+    elevation: 3, // Slightly reduced for balance
   },
   categoryBadge: {
     alignSelf: 'flex-start',
@@ -180,7 +187,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    marginBottom: 16,
+    marginTop: -24,
+    marginBottom: 32,
   },
   categoryText: {
     fontSize: 10,
@@ -211,9 +219,10 @@ const styles = StyleSheet.create({
     borderTopColor: '#F3F4F6',
   },
   source: {
-    fontSize: 14,
+    fontSize: 8,
     fontFamily: 'Inter-SemiBold',
     color: '#2563EB',
+    
   },
   date: {
     fontSize: 14,

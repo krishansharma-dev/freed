@@ -13,7 +13,7 @@ export const mockNewsData: NewsArticle[] = [
   {
     id: '1',
     headline: 'Global Climate Summit Reaches Breakthrough Agreement',
-    description: 'World leaders announce unprecedented commitment to renewable energy transition with $500 billion funding package.',
+    description: 'U.S. President Donald Trump reiterated concerns about India purchasing oil from Russia, following his announcement of a 25% tariff on Indian imports. This has sparked discussions on the impact of trade policies on global economies.',
     imageUrl: 'https://images.pexels.com/photos/2990650/pexels-photo-2990650.jpeg?auto=compress&cs=tinysrgb&w=800',
     publishedAt: '2025-01-14T10:30:00Z',
     category: 'topstories',
