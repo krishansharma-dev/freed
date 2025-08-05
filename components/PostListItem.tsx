@@ -2,6 +2,7 @@ import { Post } from "@/types";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 dayjs.extend(relativeTime);
 

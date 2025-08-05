@@ -9,9 +9,8 @@ import Animated, {
     useSharedValue,
     withSpring
 } from 'react-native-reanimated';
-
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window');
-const CARD_HEIGHT = SCREEN_HEIGHT * 0.85;
+const CARD_HEIGHT = SCREEN_HEIGHT * 0.95;
 
 interface VerticalNewsCarouselProps {
   articles: NewsArticle[];
@@ -115,7 +114,7 @@ export function VerticalNewsCarousel({ articles }: VerticalNewsCarouselProps) {
         ))}
       </PagerView>
 
-   
+    
     </View>
   );
 }
@@ -132,10 +131,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 32,
   },
   cardContainer: {
-    width: SCREEN_WIDTH - 32,
+    width: SCREEN_WIDTH - 2,
     height: CARD_HEIGHT,
   },
   card: {
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 8,
+        height: 15,
     },
     shadowOpacity: 0.3,
     shadowRadius: 16,
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    padding: 24,
+    padding: 30,
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
@@ -207,7 +206,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 16,
+    paddingTop: 32,
     borderTopWidth: 1,
     borderTopColor: '#F3F4F6',
   },

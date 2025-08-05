@@ -1,6 +1,7 @@
 import { categories, mockNewsData } from '@/data/mockNews';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { VerticalNewsCarousel } from './VerticalNewsCarousel';
 
@@ -35,13 +36,32 @@ export function CategoryTabs() {
           route: { key: string; title: string };
           focused: boolean;
           color: string;
-        }) => (
-          <View style={[styles.labelContainer, focused && styles.activeLabelContainer]}>
-            <Text style={[styles.tabLabel, { color }, focused && styles.activeTabLabel]}>
-              {route.title}
-            </Text>
-          </View>
-        )}
+        }) => {
+          const scale = useSharedValue(1);
+
+          const animatedStyle = useAnimatedStyle(() => ({
+            transform: [{ scale: withSpring(scale.value) }],
+          }));
+
+          return (
+            <TouchableOpacity
+              onPressIn={() => {
+                scale.value = 0.95; // Scale down slightly on press
+              }}
+              onPressOut={() => {
+                scale.value = 1; // Return to normal scale
+                props.jumpTo(route.key); // Switch to the selected tab
+              }}
+              style={[styles.labelContainer, focused && styles.activeLabelContainer]}
+            >
+              <Animated.View style={animatedStyle}>
+                <Text style={[styles.tabLabel, { color }, focused && styles.activeTabLabel]}>
+                  {route.title}
+                </Text>
+              </Animated.View>
+            </TouchableOpacity>
+          );
+        }}
       />
     </View>
   );
