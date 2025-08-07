@@ -1,6 +1,7 @@
 import { NewsArticle } from '@/data/mockNews';
+import Feather from '@expo/vector-icons/Feather';
 import React, { useRef, useState } from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Animated, {
   Extrapolate,
@@ -9,6 +10,7 @@ import Animated, {
   useSharedValue,
   withSpring
 } from 'react-native-reanimated';
+
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_HEIGHT = SCREEN_HEIGHT * 0.95;
 
@@ -18,6 +20,7 @@ interface VerticalNewsCarouselProps {
 
 export function VerticalNewsCarousel({ articles }: VerticalNewsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<string>>(new Set());
   const pagerRef = useRef<PagerView>(null);
   const scrollY = useSharedValue(0);
 
@@ -34,6 +37,24 @@ export function VerticalNewsCarousel({ articles }: VerticalNewsCarouselProps) {
       const diffInDays = Math.floor(diffInHours / 24);
       return `${diffInDays}d ago`;
     }
+  };
+
+  const handleBookmark = (articleId: string) => {
+    setBookmarkedArticles(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(articleId)) {
+        newSet.delete(articleId);
+      } else {
+        newSet.add(articleId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleShare = (article: NewsArticle) => {
+    // Implement share functionality here
+    console.log('Sharing article:', article.headline);
+    // You can use react-native-share library or native sharing APIs
   };
 
   const navigateUp = () => {
@@ -70,13 +91,49 @@ export function VerticalNewsCarousel({ articles }: VerticalNewsCarouselProps) {
       };
     });
 
+    const isBookmarked = bookmarkedArticles.has(article.id);
+
     return (
       <Animated.View key={article.id} style={[styles.cardContainer, animatedStyle]}>
         <View style={styles.card}>
           <Image source={{ uri: article.imageUrl }} style={styles.image} />
           <View style={styles.overlay} />
           
+          {/* Action Icons - Positioned on left side below image */}
+          <View style={styles.actionIcons}>
+            <TouchableOpacity 
+              style={styles.iconButton}
+              onPress={() => handleBookmark(article.id)}
+              activeOpacity={0.7}
+            >
+              <Feather 
+                name={isBookmarked ? "bookmark" : "bookmark"} 
+                size={20} 
+                color={isBookmarked ? "#2563EB" : "#FFFFFF"} 
+              />
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={styles.iconButton}
+              onPress={() => handleShare(article)}
+              activeOpacity={0.7}
+            >
+              <Feather 
+                name="share-2" 
+                size={20} 
+                color="#FFFFFF" 
+              />
+            </TouchableOpacity>
+          </View>
+          
           <View style={styles.content}>
+            {/* App Logo - Added above category */}
+            <Image 
+              source={require('../assets/images/app-logo.webp')} 
+              style={styles.appLogo}
+              resizeMode="contain"
+            />
+            
             <View style={styles.categoryBadge}>
               <Text style={styles.categoryText}>{article.category.toUpperCase()}</Text>
             </View>
@@ -162,6 +219,30 @@ const styles = StyleSheet.create({
     height: '40%',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
+  actionIcons: {
+    position: 'absolute',
+    right: 17,
+    top: '42%', // Positioned just below the image (which takes 40% height)
+    flexDirection: 'row',
+    gap: 10,
+    zIndex: 20,
+  },
+  iconButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
   content: {
     position: 'absolute',
     bottom: 0,
@@ -170,16 +251,23 @@ const styles = StyleSheet.create({
     height: '60%',
     padding: 40,
     backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 48, // Increased for a smoother, more elegant curve
-    borderTopRightRadius: 48, // Increased for a smoother, more elegant curve
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     shadowColor: '#FF0000',
     shadowOffset: {
       width: 0,
-      height: -10, // Adjusted to emphasize the curve shadow
+      height: -10,
     },
-    shadowOpacity: 0.2, // Softened for elegance
-    shadowRadius: 3, // Reduced for a more refined shadow
-    elevation: 3, // Slightly reduced for balance
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  appLogo: {
+    width: 35,
+    height: 30,
+    marginBottom: 20,
+    marginTop: -20, // Adjusted to align with the top of the content
+    alignSelf: 'flex-start',
   },
   categoryBadge: {
     alignSelf: 'flex-start',
@@ -187,8 +275,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    marginTop: -24,
-    marginBottom: 32,
+    marginBottom: 12,
   },
   categoryText: {
     fontSize: 10,
@@ -201,7 +288,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Bold',
     color: '#1F2937',
     lineHeight: 32,
-    marginBottom: 12,
+    marginBottom: 6,
   },
   description: {
     fontSize: 16,
@@ -222,7 +309,6 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontFamily: 'Inter-SemiBold',
     color: '#2563EB',
-    
   },
   date: {
     fontSize: 14,
